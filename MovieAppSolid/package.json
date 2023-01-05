@@ -9,15 +9,17 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "predeploy" : "pnpm run build",
-    "deploy" : "gh-pages -d build"
+    "deploy": "astro build && gh-pages -d dist"
   },
   "dependencies": {
     "@astrojs/solid-js": "^1.2.3",
+    "@nanostores/solid": "^0.3.2",
     "astro": "^1.8.0",
+    "nanostores": "^0.7.1",
     "solid-js": "^1.4.3"
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "sass": "^1.57.1"
   }
 }
