@@ -1,26 +1,28 @@
 # MovieApp - Gemini Context
 
-Legacy React/Redux portfolio project (circa 2017) using The Movie Database (TMDB) API.
+Modern React/TanStack project.
 
-## Tech Stack & Constraints
-- **Frameworks:** React 15.4 (Class components), Redux 3.6 (Thunk), React Router 3 (Hash history).
-- **Build:** Webpack 1 (Legacy `loaders` syntax), Babel 6 (`stage-0`), SCSS.
-- **API:** TMDB API v3. **Key Location:** `app/redux/constants/ApiKey.js`.
-- **Persistence:** Direct `localStorage` manipulation in both components and actions.
+## Tech Stack
+- **Framework:** React 19 (Hooks, Functional components).
+- **Routing:** TanStack Router (File-based).
+- **Data Fetching:** TanStack Query & Router Loaders.
+- **Build:** Vite.
+- **Styles:** Tailwind CSS.
+- **API:** TMDB API v3.
+- **E2E:** Playwright.
 
 ## Key Directories
-- `app/components/containers/`: Redux-connected "Smart" components.
-- `app/components/modules/`: Presentational "Dumb" components.
-- `app/redux/`: Standard Action/Reducer/Store structure.
-- `app/scss/`: Component-scoped styles.
-
-## Critical Patterns for AI
-- **Lifecycle:** Uses `componentWillMount` and `componentWillReceiveProps` (deprecated in modern React).
-- **Routing:** Routes defined in `app/routes.js` using `<Route>`/`<IndexRoute>`.
-- **Redux:** Uses `connect` and `bindActionCreators`.
-- **Persistence:** Favourites logic is duplicated across `MoviePage.js`, `MovieCard.js`, and `FavouritesActions.js`.
+- `src/components/`: Presentational and functional components.
+- `src/context/`: React Context (e.g., Favourites).
+- `src/routes/`: TanStack Router routes.
+- `src/utils/`: Shared utilities (e.g., TMDB fetching).
+- `tests/e2e/`: Playwright E2E tests and fixtures.
 
 ## Dev Workflow
-- `npm start`: Webpack dev server on `:9999` with HMR.
-- `npm run build`: Production bundle to `app/build/`.
-- **Linting:** Integrated into Webpack via `eslint-loader`.
+- `pnpm install`: Install dependencies.
+- `pnpm run dev`: Start Vite dev server on `:5173`.
+- `pnpm run build`: Build production bundle.
+- `pnpm run test:e2e`: Run Playwright tests.
+
+## Config
+- `.env`: Requires `VITE_TMDB_BEARER_TOKEN`.
