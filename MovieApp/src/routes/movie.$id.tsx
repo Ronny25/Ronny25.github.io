@@ -3,6 +3,7 @@ import { fetchTMDB } from '../utils/api';
 import { Movie, TMDBResponse, Genre, GenreResponse } from '../types/tmdb';
 import { MovieCard } from '../components/MovieCard';
 import { useFavourites } from '../hooks/useFavourites';
+import { getTMDBImageUrl, getTMDBImageSrcSet, NO_POSTER_URL } from '../utils/image';
 
 interface MovieLoaderData {
   movie: Movie;
@@ -31,22 +32,24 @@ export const Route = createFileRoute('/movie/$id')({
   component: MovieDetailsComponent,
 });
 
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/';
-const NO_POSTER_URL = 'https://via.placeholder.com/500x750?text=No+Poster';
-
 function MovieDetailsComponent() {
   const { movie, genres, recommendations, similar } = Route.useLoaderData();
   const { isFavourite, toggleFavourite } = useFavourites();
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <title>{`${movie.title} - MovieApp`}</title>
+      <meta name="description" content={movie.overview} />
+      
       <div className="flex flex-col md:flex-row gap-8 mb-12">
         <div className="w-full md:w-1/3 lg:w-1/4">
           <div className="rounded-lg shadow-xl overflow-hidden bg-gray-200 aspect-[2/3]">
             {movie.poster_path ? (
-              <a href={`${IMAGE_BASE_URL}original${movie.poster_path}`} target="_blank" rel="noreferrer">
+              <a href={getTMDBImageUrl(movie.poster_path, 'original')} target="_blank" rel="noreferrer">
                 <img
-                  src={`${IMAGE_BASE_URL}w500${movie.poster_path}`}
+                  src={getTMDBImageUrl(movie.poster_path, 'w500')}
+                  srcSet={getTMDBImageSrcSet(movie.poster_path, ['w342', 'w500', 'w780'])}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 30vw, 400px"
                   alt={`${movie.title} poster`}
                   className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                 />

@@ -4,6 +4,7 @@ import { fetchTMDB } from '../utils/api';
 import { Movie, TMDBResponse, Genre, GenreResponse } from '../types/tmdb';
 import { MovieCard } from '../components/MovieCard';
 import { SearchBox } from '../components/SearchBox';
+import { useDebounce } from '../hooks/useDebounce';
 
 interface HomeLoaderData {
   popular: TMDBResponse<Movie>;
@@ -29,13 +30,14 @@ function HomeComponent() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      if (searchQuery) {
+    async function performSearch() {
+      if (debouncedSearchQuery) {
         setIsSearching(true);
         try {
-          const data = await fetchTMDB<TMDBResponse<Movie>>(`/search/movie?query=${encodeURIComponent(searchQuery)}`);
+          const data = await fetchTMDB<TMDBResponse<Movie>>(`/search/movie?query=${encodeURIComponent(debouncedSearchQuery)}`);
           setSearchResults(data.results);
         } catch (error) {
           console.error('Search failed', error);
@@ -45,15 +47,17 @@ function HomeComponent() {
       } else {
         setSearchResults([]);
       }
-    }, 500);
+    }
 
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
+    performSearch();
+  }, [debouncedSearchQuery]);
 
   const moviesToDisplay = searchQuery ? searchResults : popular.results;
+  const title = searchQuery ? `Search: ${searchQuery} - MovieApp` : 'Popular Movies - MovieApp';
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <title>{title}</title>
       <SearchBox value={searchQuery} onChange={setSearchQuery} />
       
       <div className="flex justify-between items-center mb-6">

@@ -1,14 +1,12 @@
 import { Link } from '@tanstack/react-router';
 import { Movie, Genre } from '../types/tmdb';
 import { useFavourites } from '../hooks/useFavourites';
+import { getTMDBImageUrl, getTMDBImageSrcSet } from '../utils/image';
 
 interface MovieCardProps {
   movie: Movie;
   allGenres: Genre[];
 }
-
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w185';
-const NO_POSTER_URL = 'https://via.placeholder.com/185x278?text=No+Poster';
 
 export function MovieCard({ movie, allGenres }: MovieCardProps) {
   const { isFavourite, toggleFavourite } = useFavourites();
@@ -21,11 +19,15 @@ export function MovieCard({ movie, allGenres }: MovieCardProps) {
     : movie.genres?.map((g) => g.name).join(', ') || '';
 
   return (
-    <div className="bg-white border rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+    <div className="bg-white border rounded-lg shadow-md overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow">
       <div className="relative aspect-[2/3] bg-gray-200">
         <Link to="/movie/$id" params={{ id: movie.id.toString() }}>
           <img
-            src={movie.poster_path ? `${IMAGE_BASE_URL}${movie.poster_path}` : NO_POSTER_URL}
+            src={getTMDBImageUrl(movie.poster_path, 'w342')}
+            srcSet={getTMDBImageSrcSet(movie.poster_path, ['w185', 'w342', 'w500'])}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+            loading="lazy"
+            decoding="async"
             alt={`${movie.title} poster`}
             className="w-full h-full object-cover"
           />
@@ -45,7 +47,7 @@ export function MovieCard({ movie, allGenres }: MovieCardProps) {
             >
               ★
             </button>
-            <span className="text-sm font-semibold">{movie.vote_average}</span>
+            <span className="text-sm font-semibold">{movie.vote_average.toFixed(1)}</span>
           </div>
         )}
 
