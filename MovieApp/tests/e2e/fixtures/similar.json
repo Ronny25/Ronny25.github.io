@@ -1,0 +1,14 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "id": 272,
+      "title": "Batman Begins",
+      "poster_path": "/899876.jpg",
+      "release_date": "2005-06-15",
+      "vote_average": 7.7
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 1
+}
