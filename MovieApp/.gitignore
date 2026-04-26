@@ -1,0 +1,15 @@
+node_modules
+dist
+.env
+.env.local
+.env.*.local
+
+# Vite
+vite.config.ts.timestamp-*
+routeTree.gen.ts
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
