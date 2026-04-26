@@ -3,6 +3,7 @@ import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
+import reactCompiler from 'eslint-plugin-react-compiler';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -20,10 +21,12 @@ export default tseslint.config(
     },
     plugins: {
       'react-hooks': reactHooks,
+      'react-compiler': reactCompiler,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react/prop-types': 'off',
+      'react-compiler/react-compiler': 'error',
     },
     settings: {
       react: {
