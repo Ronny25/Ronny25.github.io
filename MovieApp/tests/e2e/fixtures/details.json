@@ -1,0 +1,13 @@
+{
+  "id": 268,
+  "title": "Batman",
+  "poster_path": "/kBf3g9SflvkyR1uSqkSy6CzNp0c.jpg",
+  "release_date": "1989-06-23",
+  "vote_average": 7.2,
+  "overview": "The Dark Knight of Gotham City begins his war on crime.",
+  "runtime": 126,
+  "genres": [{"id": 28, "name": "Action"}, {"id": 80, "name": "Crime"}],
+  "budget": 35000000,
+  "revenue": 411348924,
+  "tagline": "Have you ever danced with the devil in the pale moonlight?"
+}
